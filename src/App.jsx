@@ -4,6 +4,7 @@ import walletConnectFcn from "./components/hedera/walletConnect.js";
 import tokenCreateFcn from "./components/hedera/tokenCreate.js";
 import tokenMintFcn from "./components/hedera/tokenMint.js";
 import topicCreateFcn from "./components/hedera/topicCreate.js";
+import topicMessageFcn from "./components/hedera/topicMessage.js";
 import contractDeployFcn from "./components/hedera/contractDeploy.js";
 import contractExecuteFcn from "./components/hedera/contractExecute.js";
 import "./styles/App.css";
@@ -20,12 +21,14 @@ function App() {
 	const [mintTextSt, setMintTextSt] = useState("");
 	const [contractTextSt, setContractTextSt] = useState();
 	const [topicTextSt, setTopicTextSt] = useState();
+	const [topicMsgTextSt, setTopicMsgTextSt] = useState();
 	const [trasnferTextSt, setTransferTextSt] = useState();
 
 	const [connectLinkSt, setConnectLinkSt] = useState("");
 	const [createLinkSt, setCreateLinkSt] = useState("");
 	const [mintLinkSt, setMintLinkSt] = useState("");
 	const [topicLinkSt, setTopicLinkSt] = useState("");
+	const [topicMsgLinkSt, setTopicMsgLinkSt] = useState("");
 	const [contractLinkSt, setContractLinkSt] = useState();
 	const [trasnferLinkSt, setTransferLinkSt] = useState();
 
@@ -81,7 +84,12 @@ function App() {
 			const [topicId] = await topicCreateFcn(walletData, accountId);
 			setTopicTextSt(`New topicId is ${topicId}! ✅`);
 			setTopicLinkSt(`https://hashscan.io/testnet/topic/${topicId}`);
-		
+	}
+
+	async function topicMessage() {
+		const [topicMessage] = await topicMessageFcn(walletData, accountId);
+			
+			setTopicMsgTextSt(`New topic Message is ${topicMessage}! ✅`);
 	}
 
 	async function contractDeploy() {
@@ -145,6 +153,12 @@ function App() {
 				buttonLabel={"Create Topic"}
 				text={topicTextSt}
 				link={topicLinkSt}
+			/>
+
+			<MyGroup
+				fcn={topicMessage}
+				buttonLabel={"Send Topic Message"}
+				text={topicMsgTextSt}
 			/>
 
 			<MyGroup
